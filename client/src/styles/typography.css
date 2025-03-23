@@ -1,0 +1,88 @@
+@layer base {
+  /* Base text styles */
+  body {
+    @apply text-base text-gray-900 antialiased;
+  }
+
+  /* Heading styles */
+  h1 {
+    @apply text-3xl font-bold tracking-tight mb-4;
+  }
+
+  h2 {
+    @apply text-2xl font-bold tracking-tight mb-3;
+  }
+
+  h3 {
+    @apply text-xl font-bold tracking-tight mb-2;
+  }
+
+  h4 {
+    @apply text-lg font-bold tracking-tight mb-2;
+  }
+
+  /* Paragraph styles */
+  p {
+    @apply mb-4 leading-normal;
+  }
+
+  /* Link styles */
+  a {
+    @apply text-primary hover:text-primary-dark transition-colors;
+  }
+
+  /* List styles */
+  ul, ol {
+    @apply mb-4;
+  }
+
+  li {
+    @apply mb-1;
+  }
+
+  /* Form element text */
+  input, textarea, select {
+    @apply text-base;
+  }
+
+  /* Button text */
+  button {
+    @apply text-base font-medium;
+  }
+
+  /* Helper text */
+  .text-helper {
+    @apply text-sm text-gray-500;
+  }
+
+  /* Card titles */
+  .card-title {
+    @apply text-lg font-bold mb-2;
+  }
+
+  /* Section headers */
+  .section-header {
+    @apply text-2xl font-bold mb-6;
+  }
+
+  /* Navigation text */
+  .nav-text {
+    @apply text-base font-medium;
+  }
+
+  /* Meta text */
+  .text-meta {
+    @apply text-sm text-gray-600;
+  }
+}
+
+/* RTL text adjustments */
+[dir="rtl"] {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-almarai;
+  }
+
+  body {
+    @apply font-almarai;
+  }
+}
