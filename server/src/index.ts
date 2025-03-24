@@ -1,13 +1,13 @@
-import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import morgan from 'morgan';
-import { config } from 'dotenv';
-import { setupRoutes } from './routes';
-import { errorHandler } from './middleware/errorHandler';
-import { testConnection as testMySQLConnection } from './config/database';
-import { validateDatabaseSchema } from './utils/database';
-import { logger } from './utils/logger';
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import { config } from "dotenv";
+import { setupRoutes } from "./routes";
+import { errorHandler } from "./middleware/errorHandler";
+import { testConnection as testMySQLConnection } from "./config/database";
+import { validateDatabaseSchema } from "./utils/database";
+import { logger } from "./utils/logger";
 
 // Load environment variables
 config();
@@ -18,12 +18,12 @@ const port = process.env.PORT || 3306;
 // Middleware
 app.use(cors());
 app.use(helmet());
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(express.json());
 
 // Health check endpoint
-app.get('/health', async (req, res) => {
-  let mysqlConnected = false;
+app.get("/health", async (req, res) => {
+  let mysqlConnected: any = false;
   let retries = 3;
 
   while (retries > 0) {
@@ -35,9 +35,9 @@ app.get('/health', async (req, res) => {
   }
 
   res.json({
-    status: 'ok',
+    status: "ok",
     mysqlConnected,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 });
 
@@ -51,28 +51,26 @@ app.use(errorHandler);
 const startServer = async () => {
   try {
     // Check MySQL connection and schema
-    const [mysqlConnected, schemaValid] = await Promise.all([
-      testMySQLConnection(),
-      validateDatabaseSchema()
-    ]);
+    const [mysqlConnected] = await Promise.all([testMySQLConnection()]);
 
     if (!mysqlConnected) {
-      logger.warn('Warning: Could not connect to MySQL. Retrying...');
+      logger.warn("Warning: Could not connect to MySQL. Retrying...");
     }
 
-    if (!schemaValid) {
-      logger.warn('Warning: Database schema validation failed. Some features may not work correctly.');
-    }
+    //if (!schemaValid) {
+    // logger.warn(
+    //"Warning: Database schema validation failed. Some features may not work correctly.",
+    // );
+    //}
 
     app.listen(port, () => {
       logger.info(`Server running on port ${port}`);
       logger.info(`Database connections:
-        MySQL: ${mysqlConnected ? 'OK' : 'Failed'}
-        Schema: ${schemaValid ? 'Valid' : 'Invalid'}
+        MySQL: ${mysqlConnected ? "OK" : "Failed"}
       `);
     });
   } catch (error) {
-    logger.error('Failed to start server:', error);
+    logger.error("Failed to start server:", error);
     process.exit(1);
   }
 };
