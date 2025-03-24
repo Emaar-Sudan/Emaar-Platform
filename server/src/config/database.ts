@@ -23,7 +23,7 @@ export const pool = mysql.createPool(dbConfig);
 
 export const testConnection = async () => {
   try {
-    const connection = await mysql.createConnection(dbConfig);
+    const connection = await mysql.createPool(dbConfig);
     logger.info("MySQL database connection successful");
     return connection;
   } catch (error) {
